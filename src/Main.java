@@ -3,7 +3,6 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        System.out.println(calc(scanner.nextLine()));
     }
 
     public static String calc(String input) throws Exception {
@@ -41,13 +40,14 @@ public class Main {
             throw new Exception("Допустимы только + - / *");
         }
 
+        if (checkIsBigger(firstNumber) || checkIsBigger(secondNumber) || checkIsBigger(intToArabic(firstNumber)) || checkIsBigger(intToArabic(secondNumber))) {
+            throw new Exception("допустимы значения не больше 10");
+        }
+
         if (!map.containsValue(firstNumber) && !map.containsKey(firstNumber)  || !map.containsValue(secondNumber) && !map.containsKey(secondNumber)) {
             throw new Exception("строка не является математической операцией");
         }
 
-        if (isBigger(firstNumber) || isBigger(secondNumber) || isBigger(intToArabic(firstNumber)) || isBigger(intToArabic(secondNumber))) {
-            throw new Exception("допустимы значения не больше 10");
-        }
 
         if (map.containsKey(firstNumber) && !map.containsKey(secondNumber) || !map.containsKey(firstNumber) && map.containsKey(secondNumber)) {
             throw new Exception("используются одновременно разные системы счисления");
@@ -62,7 +62,7 @@ public class Main {
         return Integer.toString(action(firstNumber, operation, secondNumber));
     }
 
-    public static boolean isBigger(String string) {
+    public static boolean checkIsBigger(String string) {
         try {
             int numFromString = Integer.parseInt(string);
             return numFromString > 10;
